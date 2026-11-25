@@ -1,0 +1,64 @@
+/*
+ * intro.css
+ * Styles for the cinematic intro overlay and scroll reveal system.
+ * Imported once from src/index.css.
+ */
+
+/* ─── Nav fade-in controlled by IntroSequence ─── */
+[data-intro-nav] {
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+[data-intro-nav].nav-visible {
+  opacity: 1;
+}
+
+/* ─── Base hidden state for all reveal targets ─── */
+[data-reveal],
+[data-reveal-image] {
+  opacity: 0;
+  will-change: transform, opacity;
+  transition-property: opacity, transform;
+  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  transition-duration: 0.6s;
+}
+
+/* ─── Row reveal: slide in from the left ─── */
+[data-reveal="row"] {
+  transform: translateX(-28px);
+}
+[data-reveal="row"].is-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ─── Card reveal: fade up + slight scale ─── */
+[data-reveal="card"],
+[data-reveal="card-last"] {
+  transform: translateY(20px) scale(0.96);
+}
+[data-reveal="card"].is-visible,
+[data-reveal="card-last"].is-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* ─── Image inside last card: slide from the right ─── */
+[data-reveal-image] {
+  transform: translateX(40px);
+}
+[data-reveal-image].is-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ─── Reduced motion: disable all transitions ─── */
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal],
+  [data-reveal-image],
+  [data-intro-nav] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
